@@ -1,2 +1,2 @@
-# EnterpraseAppTemplate
+# EnterpriseAppTemplate
 Template of Enterprise Application 
