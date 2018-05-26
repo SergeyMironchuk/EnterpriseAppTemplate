@@ -37,15 +37,14 @@ namespace BIZ.PControl.DomainModel.Services.CalcBalance
             var balancesOnDate = BalanceDao.GetBalancesOnDate(document.Date, productIds).ToList();
             foreach (var detail in document.Details)
             {
-                var balanceOnDate =
-                    balancesOnDate.FirstOrDefault(b => b.Date == document.Date && b.Product.Id == detail.Product.Id);
-                if (balanceOnDate == null || balanceOnDate.Date < document.Date)
+                var productBalanceOnDate = balancesOnDate.FirstOrDefault(b => b.Product.Id == detail.Product.Id);
+                if (productBalanceOnDate == null || productBalanceOnDate.Date < document.Date)
                 {
                     var newBalance = new Balance
                     {
                         Date = document.Date,
                         Product = detail.Product,
-                        Quantity = balanceOnDate == null ? 0 : balanceOnDate.Quantity
+                        Quantity = productBalanceOnDate?.Quantity ?? 0
                     };
                     BalanceDao.Save(newBalance);
                 }
